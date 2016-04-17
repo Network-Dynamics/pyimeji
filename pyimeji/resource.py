@@ -132,7 +132,8 @@ class Collection(ResourceWithAuthor, DiscardReleaseMixin):
     def items(self, q=None):
         return OrderedDict(
             [(d['id'], Item(d, self._api)) for d in
-             self._api._req(self._path('items'), params=dict(q=q) if q else {})])
+             self._api._req(self._path('items'), params=dict(q=q) if q else\
+                     {})['results']])
 
     def add_item(self, **kw):
         return self._api.create('item', collectionId=self.id, **kw)
