@@ -33,6 +33,8 @@ class Config(RawConfigParser):
             if os.path.exists(config_dir):
                 with open(cfg_path, 'w') as fp:
                     self.write(fp)
+                    print("New blanck configuration file generated at %s, please edit to to suit your needs.\
+                            documentation at: %s"%(cfg_path,'http://pyimeji.readthedocs.org/en/latest/tutorial.html'))
         level = self.get('logging', 'level', default=None)
         if level:
             logging.basicConfig(level=getattr(logging, level))
