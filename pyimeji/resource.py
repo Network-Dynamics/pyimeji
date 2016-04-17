@@ -82,7 +82,7 @@ class Resource(object):
             self._path(), method='delete', assert_status=204, json=False)
 
 
-class WithAuthor(Resource):
+class ResourceWithAuthor(Resource):
     def __init__(self, d, api):
         if 'contributors' not in d:
             d['contributors'] = [
@@ -107,7 +107,7 @@ class DiscardReleaseMixin(object):
             self._path('release'), method='put', assert_status=200, json=False)
 
 
-class Album(WithAuthor, DiscardReleaseMixin):
+class Album(ResourceWithAuthor, DiscardReleaseMixin):
     def members(self):
         return OrderedDict(
             [(d['id'], d) for d in self._api._req(self._path('members'))])
@@ -128,7 +128,7 @@ class Album(WithAuthor, DiscardReleaseMixin):
         return self._act_on_members('unlink', *ids, **{'assert_status': 204})
 
 
-class Collection(WithAuthor, DiscardReleaseMixin):
+class Collection(ResourceWithAuthor, DiscardReleaseMixin):
     def items(self, q=None):
         return OrderedDict(
             [(d['id'], Item(d, self._api)) for d in
